@@ -10,6 +10,7 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => setVideos(data.data));
   }, []);
+  
   return (
     <Layout>
       <div className="row">
