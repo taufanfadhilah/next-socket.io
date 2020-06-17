@@ -10,7 +10,9 @@ const Navbar = () => (
       </Link>
       <ul id="nav-mobile" className="right hide-on-med-and-down">
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
         </li>
       </ul>
     </div>

@@ -1,30 +1,36 @@
 import React from "react";
 import Link from "next/link";
 
-const Card = () => (
+const Card = ({ video }) => (
   <div className="row">
     <div className="col s12 m12">
       <div className="card">
         <div className="card-image">
-          <img src="https://blog.tiket.com/wp-content/uploads/Gambar-Pemandangan-Alam-Terindah-Gunung-Krakatau.jpg" />
+          <img src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} />
         </div>
         <div className="card-content">
           <div className="row">
             <div className="col m3 s3" style={{ marginTop: 10 }}>
               <img
-                src="https://i0.wp.com/mojok.co/terminal/wp-content/uploads/2019/11/deddy.jpg?resize=800%2C540&ssl=1"
+                src={`https://img.youtube.com/vi/${video.id}/default.jpg`}
                 alt=""
                 className="circle responsive-img"
               ></img>
             </div>
             <div className="col m9 s9">
-              <p style={{ fontWeight: 500, fontSize: 18 }}>Video Title</p>
-              <p class="grey-text text-lighten-1">Deddy Corbuzier</p>
+              <p className="truncate" style={{ fontWeight: 500, fontSize: 18 }}>
+                {video.title}
+              </p>
+              <p className="grey-text text-lighten-1 truncate">
+                {video.channel}
+              </p>
             </div>
           </div>
         </div>
         <div className="card-action">
-          <Link href="/video">Watch this</Link>
+          <Link href={`/video/${video.id}`}>
+            <a>Watch this</a>
+          </Link>
         </div>
       </div>
     </div>
