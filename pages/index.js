@@ -7,7 +7,7 @@ export default function Home() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    io("/"); // for register to websocket
+    // io("/"); // for register to websocket
     fetch("/api/videos")
       .then((res) => res.json())
       .then((data) => setVideos(data.data));

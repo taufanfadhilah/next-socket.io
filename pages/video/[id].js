@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 import Layout from "../../components/layout";
 
 const Video = ({ id }) => {
   const [video, setVideo] = useState({});
+  const [views, setViews] = useState(1);
+  const socket = io("/"); // register to socket.io
 
   useEffect(() => {
+    socket.emit("watch", id); // join video room
     fetch(`/api/video/${id}`)
       .then((res) => res.json())
       .then((data) => setVideo(data.data));
   }, []);
+
+  useEffect(() => {
+    socket.on("views", (views) => setViews(views)); // get count views on same video
+  });
 
   return (
     <Layout>
@@ -27,7 +35,7 @@ const Video = ({ id }) => {
           </p>
           <p>
             Current Watching:{" "}
-            <span style={{ fontWeight: 500, fontSize: 18 }}>500</span>
+            <span style={{ fontWeight: 500, fontSize: 18 }}>{views}</span>
           </p>
           <hr />
         </div>
