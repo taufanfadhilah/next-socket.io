@@ -8,28 +8,20 @@ const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
-let users = [];
+const { addUser, getViews, removeUser } = require("./pages/api/data/users");
 
 // socket.io
 io.on("connection", (socket) => {
   socket.on("watch", (video) => {
     socket.join(video);
-    users.push({
-      id: socket.id,
-      video: video,
-    });
-    let views = users.filter((user) => user.video === video).length;
 
-    io.to(video).emit("views", views);
+    addUser(socket.id, video);
+
+    io.to(video).emit("views", getViews(video));
 
     socket.on("disconnect", () => {
-      const index = users.findIndex((user) => user.id === socket.id);
-
-      if (index !== -1) {
-        users.splice(index, 1)[0];
-      }
-      views = users.filter((user) => user.video === video).length;
-      io.to(video).emit("views", views);
+      removeUser(socket.id);
+      io.to(video).emit("views", getViews(video));
     });
   });
 });
